@@ -15,7 +15,7 @@
         ranges;
 
         fb_reserved: frame_buffer@1f80000 {
-            reg = <0x01f80000 0x00080000>; /* 512 KB yer ayırır */
+            reg = <0x01f80000 0x00080000>; /* 512 KB allocated*/
             no-map;
         };
     };
@@ -37,7 +37,7 @@
         };
     };
 
-    /* */
+    /* memory block 1*/
     memory@0 {
         device_type = "memory";
         reg = <0x00000000 0x02000000>; /* 32 megabytes ram */
