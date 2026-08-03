@@ -14,8 +14,9 @@
         #size-cells = <1>;
         ranges;
 
+        /* 1mb allocated for color*/
         fb_reserved: frame_buffer@1f80000 {
-            reg = <0x01f80000 0x00080000>; /* 512 KB allocated*/
+            reg = <0x01f80000 0x00100000>; /* 1 MB (0x100000) */
             no-map;
         };
     };
@@ -27,11 +28,11 @@
 
         framebuffer0: framebuffer@1f80000 {
             compatible = "simple-framebuffer";
-            reg = <0x01f80000 0x0005dc00>; /* 800 * 480 */
+            reg = <0x01f80000 0x000bb800>; /* 800 * 480 * 2 bytes = 768 KB */
             width = <800>;
             height = <480>;
-            stride = <800>;
-            format = "gray8";
+            stride = <1600>;               /* 800 * 2 bytes */
+            format = "r5g6b5";             /* 16-bit color */
             memory-region = <&fb_reserved>;
             status = "okay";
         };
