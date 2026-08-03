@@ -101,5 +101,13 @@
 			interrupts = <27>;
 			status = "disabled";
 		};
+
+			spi0: spi@1f000000 {
+			compatible = "montage,m88cs8001b-spi";
+			reg = <0x1f000000 0x1000>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			status = "disabled";
+		};
 	};
 };
