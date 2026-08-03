@@ -1,0 +1,71 @@
+/dts-v1/;
+
+/* include mips cpu */
+#include "m88cs8001b.dtsi"
+
+/ {
+    model = "ElectroMaster Link";
+    compatible = "electromaster,link", "montage,m88cs8001b";
+    #address-cells = <1>;
+    #size-cells = <1>;
+
+    reserved-memory {
+        #address-cells = <1>;
+        #size-cells = <1>;
+        ranges;
+
+        fb_reserved: frame_buffer@1f80000 {
+            reg = <0x01f80000 0x00080000>; /* 512 KB allocated */
+            no-map;
+        };
+    };
+
+    chosen {
+        /* bootargs?? to be edited */
+        bootargs = "console=ttyS0,115200 root=/dev/mtdblock3 rw rootfstype=squashfs earlycon";
+        stdout-path = "serial0:115200n8";
+
+        framebuffer0: framebuffer@1f80000 {
+            compatible = "simple-framebuffer";
+            reg = <0x01f80000 0x0005dc00>; /* 800 * 480 */
+            width = <800>;
+            height = <480>;
+            stride = <800>;
+            format = "gray8";
+            memory-region = <&fb_reserved>;
+            status = "okay";
+        };
+    };
+
+    /* */
+    memory@0 {
+        device_type = "memory";
+        reg = <0x00000000 0x02000000>; /* 32 megabytes ram */
+    };
+};
+
+/* 4 megabytes spi flash */
+&spi0 {
+    status = "okay";
+
+    flash@0 {
+        compatible = "jedec,spi-nor";
+        reg = <0>;
+        spi-max-frequency = <50000000>; /* 50 MHz */
+
+        /* fixed partitions added soon..*/
+    };
+};
+
+&serial0 {
+    status = "okay";
+};
+
+&usb0 {
+    status = "okay";
+};
+
+&usb1 {
+    status = "okay";
+};
+
